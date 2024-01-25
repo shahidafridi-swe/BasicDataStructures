@@ -61,35 +61,48 @@ void delete_at_position(Node *head, int pos)
     delete deleteNode;
 }
 
-void delete_tail(Node *&tail)
+void delete_tail(Node *&head, Node *&tail)
 {
     Node *deleteNode = tail;
     tail = tail->prev;
-    tail->next = NULL;
     delete deleteNode;
+    if (tail == NULL)
+    {
+        head = NULL;
+        return;
+    }
+    tail->next = NULL;
 }
-void delete_head(Node *&head)
+void delete_head(Node *&head, Node *&tail)
 {
     Node *deleteNode = head;
     head = head->next;
-    head->prev = NULL;
     delete deleteNode;
+    if (head == NULL)
+    {
+        tail = NULL;
+        return;
+    }
+    head->prev = NULL;
 }
 int main()
 {
     Node *head = new Node(10);
-    Node *a = new Node(20);
-    Node *b = new Node(30);
-    Node *c = new Node(40);
-    Node *tail = c;
+    Node *tail = head;
 
-    // connection
-    head->next = a;
-    a->prev = head;
-    a->next = b;
-    b->prev = a;
-    b->next = c;
-    c->prev = b;
+    // Node *head = new Node(10);
+    // Node *a = new Node(20);
+    // Node *b = new Node(30);
+    // Node *c = new Node(40);
+    // Node *tail = c;
+
+    // // connection
+    // head->next = a;
+    // a->prev = head;
+    // a->next = b;
+    // b->prev = a;
+    // b->next = c;
+    // c->prev = b;
 
     // Node *head = NULL;
     // Node *tail = NULL;
@@ -99,9 +112,9 @@ int main()
     if (pos < 0 || pos >= size(head))
         cout << "INVALID INDEX" << endl;
     else if (pos == 0)
-        delete_head(head);
+        delete_head(head, tail);
     else if (pos == size(head) - 1)
-        delete_tail(tail);
+        delete_tail(head, tail);
     else
         delete_at_position(head, pos);
 
